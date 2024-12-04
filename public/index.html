@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CosenseQuick for Google Calendar</title>
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --background-color: #f4f4f6;
+            --text-color: #333;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section {
+            background-color: #f9f9fb;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        #bookmarkletLink {
+            display: block;
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        #bookmarkletLink:hover {
+            background-color: #2E7D32;
+        }
+        .variable {
+            background-color: #f0f0f2;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .variable strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CosenseQuick for Google Calendar</h1>
+
+        <div class="section">
+            <h3>概要</h3>
+            <p>Google Calendarのイベント編集画面から、Cosenseのページリンクを瞬時に生成するブックマークレットツールです。</p>
+            <ul>
+                <li>Google Calendarのイベント情報を自動活用</li>
+                <li>カスタマイズ可能なページタイトルフォーマット</li>
+                <li>ワンクリックでCosenseページのリンクを生成</li>
+            </ul>
+        </div>
+        
+        <div class="input-group">
+            <label for="projectName">プロジェクト名:</label>
+            <input type="text" id="projectName" placeholder="例: projectName" value="projectName">
+        </div>
+        
+        <div class="input-group">
+            <label for="pageTitleFormat">ページタイトルのフォーマット:</label>
+            <input type="text" id="pageTitleFormat" value="{title} {date:yyyy/MM/dd}" placeholder="例: {title} {date:yyyy/MM/dd}">
+        </div>
+        
+        <a href="#" id="bookmarkletLink">ブックマークレットをドラッグ</a>
+
+        <div class="section">
+            <h3>使い方</h3>
+            <ol>
+                <li>このページの「ブックマークレットをドラッグ」のリンクをブックマークバーにドラッグ＆ドロップ</li>
+                <li>Google Calendarのイベント編集画面で、作成したブックマークレットをクリック</li>
+                <li>自動的にCosenseのページリンクが生成され、説明欄に追加されます</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h3>使用可能な変数</h3>
+            <div class="variable">
+                <strong>{title}</strong>
+                <p>入力されたタイトル</p>
+                <p>例: "プロジェクト報告"</p>
+            </div>
+            <div class="variable">
+                <strong>{date}</strong>
+                <p>ローカライズされた日付（日本語形式）</p>
+                <p>例: "2024/02/15"</p>
+            </div>
+            <div class="variable">
+                <strong>{date:yyyyMMdd}</strong>
+                <p>元の日付形式（8桁の数字）</p>
+                <p>例: "20240215"</p>
+            </div>
+            <div class="variable">
+                <strong>{date:yyyy/MM/dd}</strong>
+                <p>スラッシュ区切りの日付形式</p>
+                <p>例: "2024/02/15"</p>
+            </div>
+            <div class="variable">
+                <strong>{date:yyyy-MM-dd}</strong>
+                <p>ハイフン区切りの日付形式</p>
+                <p>例: "2024-02-15"</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateBookmarklet() {
+            const projectName = document.getElementById('projectName').value || 'projectName';
+            const pageTitleFormat = document.getElementById('pageTitleFormat').value || '{title} {date:yyyy/MM/dd}';
+
+            const bookmarkletCode = `javascript:!function(e){
+    const t=document.querySelector("#xTiIn").value,
+    d=document.querySelector("#xStDaIn").getAttribute("data-date"),
+    a=d.slice(0,4)+"/"+d.slice(4,6)+"/"+d.slice(6,8),
+    c=new Date(a).toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"}),
+    n="${pageTitleFormat}".replace("{title}",t).replace("{date}",c).replace("{date:yyyyMMdd}",d).replace("{date:yyyy/MM/dd}",c).replace("{date:yyyy-MM-dd}",c.replace("/","-")),
+    l=\`https://scrapbox.io/${encodeURIComponent(projectName)}/\${encodeURIComponent(n)}\`,
+    o=document.querySelector("#xDescIn").querySelector("[g_editable]");
+    if(o.innerHTML.includes(l))alert("このURLは既に説明文に含まれています。");
+    else{const e=document.createElement("div");e.textContent=l,o.appendChild(e)}
+}(document);`;
+
+            const bookmarkletLink = document.getElementById('bookmarkletLink');
+            bookmarkletLink.href = bookmarkletCode;
+        }
+
+        // Generate bookmarklet on page load and when inputs change
+        document.getElementById('projectName').addEventListener('input', generateBookmarklet);
+        document.getElementById('pageTitleFormat').addEventListener('input', generateBookmarklet);
+        generateBookmarklet();
+    </script>
+</body>
+</html>
