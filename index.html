@@ -177,7 +177,7 @@
     l=\`https://scrapbox.io/${encodeURIComponent(projectName)}/\${encodeURIComponent(n)}\`,
     o=document.querySelector("#xDescIn").querySelector("[g_editable]");
     if(o.innerHTML.includes(l))alert("このURLは既に説明文に含まれています。");
-    else{const e=document.createElement("div");e.textContent=l,o.appendChild(e)}
+    else{const e=document.createElement("div"),t=document.createElement("a");t.href=l,t.textContent=l,e.appendChild(t),r.appendChild(e)}
 }(document);`;
 
             const bookmarkletLink = document.getElementById('bookmarkletLink');
