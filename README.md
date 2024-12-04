@@ -16,7 +16,7 @@ https://cti1650.github.io/CosenseQuick-for-Google-Calendar/
 
 以下のリンクのようにクエリパラメータで初期値を指定できるようになっています。
 
-[https://cti1650.github.io/CosenseQuick-for-Google-Calendar/?project=projectName&{title}%20{date}](https://cti1650.github.io/CosenseQuick-for-Google-Calendar/?project=projectName&{title}%20{date})
+[https://cti1650.github.io/CosenseQuick-for-Google-Calendar/?project=projectName&format={title}%20{date}](https://cti1650.github.io/CosenseQuick-for-Google-Calendar/?project=projectName&format={title}%20{date})
 
 パラメータ名|概要|記述例
 :-|:-|:-
