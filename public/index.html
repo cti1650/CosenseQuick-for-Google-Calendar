@@ -104,7 +104,7 @@
         
         <div class="input-group">
             <label for="projectName">プロジェクト名:</label>
-            <input type="text" id="projectName" placeholder="例: projectName" value="projectName">
+            <input type="text" id="projectName" placeholder="例: Nota" value="Nota">
         </div>
         
         <div class="input-group">
@@ -154,9 +154,19 @@
     </div>
 
     <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
         function generateBookmarklet() {
-            const projectName = document.getElementById('projectName').value || 'projectName';
-            const pageTitleFormat = document.getElementById('pageTitleFormat').value || '{title} {date:yyyy/MM/dd}';
+            // Check for query parameters, use them if present, otherwise use defaults
+            const projectName = getQueryParam('project') || document.getElementById('projectName').value || 'projectName';
+            const pageTitleFormat = getQueryParam('format') || document.getElementById('pageTitleFormat').value || '{title} {date:yyyy/MM/dd}';
+
+            // Update input fields with query parameter values if they exist
+            document.getElementById('projectName').value = projectName;
+            document.getElementById('pageTitleFormat').value = pageTitleFormat;
 
             const bookmarkletCode = `javascript:!function(e){
     const t=document.querySelector("#xTiIn").value,
@@ -177,6 +187,8 @@
         // Generate bookmarklet on page load and when inputs change
         document.getElementById('projectName').addEventListener('input', generateBookmarklet);
         document.getElementById('pageTitleFormat').addEventListener('input', generateBookmarklet);
+        
+        // Initial generation
         generateBookmarklet();
     </script>
 </body>
